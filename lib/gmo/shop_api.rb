@@ -281,7 +281,7 @@ module GMO
       # })
       # {"ACS"=>"0", "OrderID"=>"100", "Forward"=>"2a99662", "Method"=>"1", "PayTimes"=>"", "Approve"=>"6294780", "TranID"=>"1302160543111111111111192829", "TranDate"=>"20130216054346", "CheckString"=>"3e455a2168fefc90dbb7db7ef7b0fe82", "ClientField1"=>"client_field1", "ClientField2"=>"", "ClientField3"=>""}
       def exec_tran(options = {})
-        name = "ExecTran.idPass"
+        name = "ExecTran.json"
         if options[:client_field_1] || options[:client_field_2] || options[:client_field_3]
           options[:client_field_flg] = "1"
         else
