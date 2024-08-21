@@ -281,7 +281,7 @@ module GMO
       # })
       # {"ACS"=>"0", "OrderID"=>"100", "Forward"=>"2a99662", "Method"=>"1", "PayTimes"=>"", "Approve"=>"6294780", "TranID"=>"1302160543111111111111192829", "TranDate"=>"20130216054346", "CheckString"=>"3e455a2168fefc90dbb7db7ef7b0fe82", "ClientField1"=>"client_field1", "ClientField2"=>"", "ClientField3"=>""}
       def exec_tran(options = {})
-        name = "ExecTran.idPass"
+        name = "ExecTran.json"
         if options[:client_field_1] || options[:client_field_2] || options[:client_field_3]
           options[:client_field_flg] = "1"
         else
@@ -687,6 +687,39 @@ module GMO
       def search_trade_multi(options = {})
         name = "SearchTradeMulti.idPass"
         required = [:order_id, :pay_type]
+        assert_required_options(required, options)
+        post_request name, options
+      end
+
+      ###################################################
+      # 3DS2.0 対応
+      ###################################################
+
+      # 4.3.1.7 3DS2.0認証実行(Tds2Auth)
+      # DS2.0認証を実行します。
+      # 3DS2.0認証初期化URL(RedirectUrl)のコールバックを受けたタイミングで本処理を実行してください。
+      def tds2_auth(options = {})
+        name = "Tds2Auth.idPass"
+        required = [:access_id, :access_pass, :tds2_param]
+        assert_required_options(required, options)
+        post_request name, options
+      end
+
+      # 4.3.1.8 3DS2.0認証結果取得(Tds2Result)
+      # 3DS2.0認証の最終的な認証結果を取得します。
+      # 3DS2.0認証チャレンジURL(ChallengeUrl)のコールバックを受けたタイミングで本処理を実行してください。
+      def tds2_result(options = {})
+        name = "Tds2Result.idPass"
+        required = [:access_id, :access_pass]
+        assert_required_options(required, options)
+        post_request name, options
+      end
+
+      # 4.3.1.12 3DS2.0認証後決済実行(SecureTran2)
+      # 3DS2.0サービスの結果を解析し、その情報を使用してカード会社と通信を行い決済を実施して結果を返します。
+      def secure_tran_2(options = {})
+        name = "SecureTran2.idPass"
+        required = [:access_id, :access_pass]
         assert_required_options(required, options)
         post_request name, options
       end
